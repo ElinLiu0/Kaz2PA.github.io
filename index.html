@@ -1,0 +1,118 @@
+<!--write me a sample code using vue2 and element ui-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>哈萨克语转拼音</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        #app {
+            margin: 20px;
+        }
+        .title{
+            font-size: 30px;
+            margin-top: 20px;
+            color: grey;
+            margin-left: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-row>
+            <el-col :span="24">
+                <div class="grid-content bg-purple">
+                    <p class="title">哈萨克语</p>
+                    <el-input 
+                        v-model="input" 
+                        placeholder="请输入内容" 
+                        @change="convert"
+                        :rows="10"
+                        type="textarea"
+                        style="width:500px;margin-left:20%"
+                    >
+                    </el-input>
+                </div>
+            </el-col>
+            <el-col :span="24">
+                <div class="grid-content bg-purple-light">
+                    <p class="title">拼音</p>
+                    <el-input 
+                        v-model="output" 
+                        placeholder="转换结果" 
+                        :rows="10"
+                        type="textarea"
+                        style="width:500px;margin-left:20%"
+                    ></el-input>
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+
+    <script>
+        const Mapping = {
+            "ا": "a",
+            "ب": "b",
+            "ۆ": "v",
+            "گ": "g",
+            "":"",
+            "د": "d",
+            "ە": "e",
+            "ج": "dʒ",
+            "ز": "z",
+            "ى": "i",
+            "ك": "k",
+            "ق": "q",
+            "ل": "l",
+            "م": "m",
+            "ن": "n",
+            "ڭ": "ŋ",
+            "و": "o",
+            "ۇ": "",
+            "پ": "p",
+            "ر": "r",
+            "س": "s",
+            "ت": "t",
+            "ۋ": "w",
+            "ۇ": "u",
+            "ف": "f",
+            "خ": "χ",
+            "ھ":"h",
+            "چ":"tʃ",
+            "ئى":"i",
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                input: '',
+                output: ''
+            },
+            methods: {
+                convert: function () {
+                    let input = this.input;
+                    let output = '';
+                    for (let i = 0; i < input.length; i++) {
+                        let char = input[i];
+                        if (Mapping[char]) {
+                            output += Mapping[char];
+                        } else {
+                            output += char;
+                        }
+                    }
+                    this.output = output;
+                }
+            },
+            watch: {
+                input: function (newVal, oldVal) {
+                    this.convert();
+                }
+            }
+        });
+    </script>
+
+</html>
